@@ -1,11 +1,8 @@
 class Room
   def initialize(raw_room)
 
-    @name, @number = raw_room.split(/\-(?=\d)/)
-    @number,@checksum = @number.split("[")
-    @checksum.chomp!.chop!
+    @name, @number, @checksum = raw_room.match(/(\D+)-(\d+)\[(.+)\]/).captures
     @number = @number.to_i
-    
   end  
 
   attr_reader :name,:number,:checksum
@@ -46,6 +43,7 @@ end
 x = Room.new(File.readlines('input2.txt').first)
 p x.value
 
+exit
 rooms = File.readlines('input.txt').map do |raw_room|
   Room.new(raw_room)
 end
