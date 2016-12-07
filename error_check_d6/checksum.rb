@@ -1,6 +1,7 @@
 module MinMaxer
   refine Array do
-    def min_max_by(&block)
+    def minmax_letters(&block)
+      block ||= lambda {|i| i.size }
       sort
         .chunk_while { |i,n| i == n  }
         .minmax_by(&block)
@@ -16,7 +17,7 @@ module NoiseFilter
   def filter(list)
     list.map(&:chars)
       .transpose
-      .map {|row| row.min_max_by(&:size) }
+      .map {|row| row.minmax_letters }
       .transpose
       .map(&:join)
   end
