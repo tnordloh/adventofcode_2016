@@ -1,23 +1,26 @@
-module Checksum
-  module_function
+module MinMaxer
+  refine Array do
+    def min_max_by(&block)
+      sort
+        .chunk_while { |i,n| i == n  }
+        .minmax_by(&block)
+        .map(&:first)
+    end
+  end
+end
 
-  def min_max(list)
+module NoiseFilter
+  module_function
+  using MinMaxer
+
+  def filter(list)
     list.map(&:chars)
       .transpose
-      .map { |row| letter_count(row) }
+      .map {|row| row.min_max_by(&:size) }
       .transpose
       .map(&:join)
   end
-
-  def letter_count(row)
-    row.sort
-      .chunk_while { |i,n| i == n  }
-      .minmax_by(&:size)
-      .map(&:first)
-  end
-
 end
 
-@list = ARGF.readlines.map {|row| row.chomp }
-
-p "min_max is #{Checksum.min_max(@list).join(',')}"
+@noisy_data = ARGF.readlines.map {|row| row.chomp }
+p "min_max is #{NoiseFilter.filter(@noisy_data).join(',')}"
