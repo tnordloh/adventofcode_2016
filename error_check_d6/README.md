@@ -1,7 +1,6 @@
 # given this #
 
-d
-
+```
 eedadn
 drvtee
 eandsr
@@ -18,6 +17,7 @@ vntsnd
 vrdear
 dvrsen
 enarar
+```
 
 
 find the most common character in each column.
