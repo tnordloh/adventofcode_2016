@@ -20,6 +20,4 @@ end
 
 @list = ARGF.readlines.map {|row| row.chomp }
 
-#p "min is #{ErrorCheck.min(@list).join}"
-#p "max is #{ErrorCheck.max(@list).join}"
 p "min_max is #{Checksum.min_max(@list).join(',')}"
