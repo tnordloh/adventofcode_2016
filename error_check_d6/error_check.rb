@@ -3,10 +3,14 @@ module ErrorCheck
 
   def sum_columns(list)
     list.transpose.each_with_object([]) do |row,memo|
-      counter = Hash.new(default=0)
-      row.each { |char| counter[char] += 1 }
-      memo << counter
+      memo << letter_count(row)
     end
+  end
+
+  def letter_count(row)
+    row.each_with_object(Hash.new(default=0)) { |char,counter|
+      counter[char] += 1 
+    }
   end
 
   def max_min(max_min, list)
