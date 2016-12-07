@@ -9,15 +9,16 @@ module ErrorCheck
     end
   end
 
-  def min(list)
-    counters = sum_columns(list)
-    counters.map { |counter| counter.rassoc(counter.values.min)[0] }
+  def max_min(max_min, list)
+    sum_columns(list)
+      .map { |counter| counter.rassoc(counter.values.send(max_min))[0] }
   end
 
-  def max(list)
-    counters = sum_columns(list)
-    counters.map do |counter|
-      counter.rassoc(counter.values.max)[0]
+  def method_missing(m, *args)
+    if m == :max || :min
+      max_min(m,*args)
+    else
+      super
     end
   end
 
