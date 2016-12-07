@@ -2,19 +2,18 @@ module Checksum
   module_function
 
   def min_max(list)
-    list.map { |row| row.chars}
-        .transpose
-        .map { |row| letter_count(row) }
-        .transpose
-        .map(&:join)
+    list.map(&:chars)
+      .transpose
+      .map { |row| letter_count(row) }
+      .transpose
+      .map(&:join)
   end
-
 
   def letter_count(row)
     row.sort
-       .chunk_while { |i,n| i == n  }
-       .minmax_by   { |c|   c.size  }
-       .map         { |x|   x.first }
+      .chunk_while { |i,n| i == n  }
+      .minmax_by(&:size)
+      .map(&:first)
   end
 
 end
