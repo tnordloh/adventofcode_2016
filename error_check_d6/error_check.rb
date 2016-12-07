@@ -7,9 +7,15 @@ module ErrorCheck
     end
   end
 
+  def chunk_by_letter(row)
+    row.sort.chunk_while { |i,n| i == n }
+  end
+
   def letter_count(row)
-    row.each_with_object(Hash.new(default=0)) { |char,counter|
-      counter[char] += 1 
+    chunked = chunk_by_letter(row)
+    chunked
+      .each_with_object(Hash.new(default=0)) {|i,counter| 
+      counter[i[0]] = i.size
     }
   end
 
