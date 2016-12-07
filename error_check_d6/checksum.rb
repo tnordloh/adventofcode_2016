@@ -1,26 +1,20 @@
 module Checksum
   module_function
 
-  def sum_columns(list)
-    list
-      .map {|row| row.chars}
-      .transpose
-      .map  { |row| letter_count(row) }
-      .transpose
-      .map(&:join)
+  def min_max(list)
+    list.map { |row| row.chars}
+        .transpose
+        .map { |row| letter_count(row) }
+        .transpose
+        .map(&:join)
   end
 
 
   def letter_count(row)
-    row
-      .sort
-      .chunk_while { |i,n| i == n }
-      .minmax_by {|c| c.size }
-      .map {|x| x.first }
-  end
-
-  def min_max(list)
-    sum_columns(list)
+    row.sort
+       .chunk_while { |i,n| i == n  }
+       .minmax_by   { |c|   c.size  }
+       .map         { |x|   x.first }
   end
 
 end
