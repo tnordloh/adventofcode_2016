@@ -12,11 +12,10 @@ module ErrorCheck
   end
 
   def letter_count(row)
-    chunked = chunk_by_letter(row)
-    chunked
-      .each_with_object(Hash.new(default=0)) {|i,counter| 
-      counter[i[0]] = i.size
-    }
+    chunk_by_letter(row)
+    .each_with_object(Hash.new(default=0)) {|i,counter| 
+       counter[i[0]] = i.size
+     }
   end
 
   def max_min(max_min, list)
