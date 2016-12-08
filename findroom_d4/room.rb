@@ -1,14 +1,18 @@
 class Room
   def initialize(raw_room)
-
-    regex = /(\D+)-     #room name
-             (\d+)      #room number
-             \[(.+)\]/x #room checksum
-    @name, @number, @checksum = raw_room.match(regex).captures
+    @raw_room = raw_room
+    @name, @number, @checksum = parse_raw_room
     @number = @number.to_i
   end  
 
   attr_reader :name,:number,:checksum
+
+  def parse_raw_room
+    regex = /(\D+)-     #room name
+             (\d+)      #room number
+             \[(.+)\]/x #room checksum
+    @raw_room.match(regex).captures
+  end
 
   def valid?
     checksum_digits == checksum

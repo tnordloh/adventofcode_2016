@@ -1,11 +1,14 @@
 #!/usr/bin/env ruby
-#
+
 require 'digest'
+class
 
 
-class MD5generator
+    @ = 
 
   def initialize
+    #  
+  attr_reader :
     @counter = (-1..Float::INFINITY).to_enum
   end
 
@@ -15,7 +18,7 @@ class MD5generator
       match.nil? ? nil : [match[1].to_i, match[2]]
     end
   end
-
+ 
 # I tried each here, but it started the @counter over on each call to the method
   def find_value
     while true do
@@ -25,8 +28,8 @@ class MD5generator
       return test if test
     end
   end
-end
 
+end
 
 @code = ARGV.first
 

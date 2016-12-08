@@ -10,9 +10,8 @@ def read_down
 end
 
 def valid_triangle?(triangle)
-  order = [[0,1,2],[0,2,1],[1,2,0]]
-  order.all? { |o| 
-    triangle[o[0]] + triangle[o[1]] > triangle[o[2]]
+  triangle.permutation.all? { |p| 
+    p[0] + p[1] > p[2]
   }
 end
 
