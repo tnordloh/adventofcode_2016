@@ -16,13 +16,13 @@ describe Screen do
       }
     } 
     x = Screen.new(7,3)
-    x.fill(3,2).must_equal(@start_screen)
+    x.fill_rectangle(3,2).must_equal(@start_screen)
   end
 
   it "fills with 3x2, then rotates 'x' once" do
     return_value="#.#....\n###....\n.#....."
     x = Screen.new(7,3)
-    x.fill(3,2)
+    x.fill_rectangle(3,2)
     x.rotate_x(1,1)
     x.to_s.must_equal(return_value)
   end

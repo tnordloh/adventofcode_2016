@@ -1,22 +1,16 @@
 class Screen
   def initialize(x,y)
-
     @screen = create(x,y)
-
   end  
   attr_accessor :initial_screen
 
   def create(x,y)
-    y.times.map  { 
-      Array.new(x,default=".")
-    }
+    y.times.map { Array.new(x,default=".") }
   end
 
-  def fill(x_size,y_size)
+  def fill_rectangle(x_size,y_size)
     x_size.times { |x| 
-      y_size.times { |y| 
-        @screen[y][x] = "#"
-      }
+      y_size.times { |y| @screen[y][x] = "#" }
     } 
     @screen 
   end
@@ -47,8 +41,7 @@ class Screen
       amount = parsed[4].to_i
       rotate_x(address.to_i,amount)
     elsif text.start_with?("rect")
-      parsed = text.split(/\s+/)
-      x,y = parsed[1].split('x')
+      x,y = text.split(/\s+/)[1].split('x')
       fill(x.to_i,y.to_i)
     end
   end
