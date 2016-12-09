@@ -1,12 +1,18 @@
 # screen test #
 based on instructions, modify a screen with pixels on a screen
 
+# initializer #
+input of x,y size, 
+create empty screen (2d array, filled with ".")
 
 
 
 # input  #
+file-based
+ARGF.readlines.
 
 # output #
+number of pixels that are on 
 
 # algorithms #
 * rect AxB turns on all of the pixels in a rectangle at the top-left of the screen which is A wide and B tall.
