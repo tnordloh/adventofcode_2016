@@ -28,15 +28,14 @@ class Screen
   end
 
   def rotate_y(row,amount)
-    puts @screen.size
     @screen[row] = @screen[row].rotate((amount * -1))
   end
     
   def to_s
-    @screen.map {|l| l.join  }.join("\n")
+    @screen.map(&:join).join("\n")
   end
 
-  def parse(text)
+  def refresh(text)
     if text.start_with?("rotate row")
       parsed = text.split(/\s+/)
       axis,address = parsed[2].split("=")
@@ -51,7 +50,6 @@ class Screen
       parsed = text.split(/\s+/)
       x,y = parsed[1].split('x')
       fill(x.to_i,y.to_i)
-
     end
   end
 
@@ -64,9 +62,9 @@ end
 if $0 == __FILE__
   input = ARGF.readlines
   s = Screen.new(50,6)
-  input.each do |line|
-    p line
-    s.parse(line.chomp)
+  input.each do |instruction|
+    p instruction
+    s.refresh(instruction.chomp)
     puts s.to_s
   end
   p s.count_hashes
