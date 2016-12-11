@@ -12,6 +12,12 @@ module Decompress
     def beginning
       md[1]
     end
+    def middle
+      compressed_section * multiplier
+    end
+    def end
+      md.post_match[letter_count..-1]
+    end
     def letter_count
       md[2].to_i
     end
@@ -21,17 +27,10 @@ module Decompress
     def compressed_section
       md.post_match[0,letter_count]
     end
-    def middle
-      compressed_section * multiplier
-    end
-    def end
-      md.post_match[letter_count..-1]
-    end
   end
 
   def self.decompress(compressed)
     md = DSParser.new(compressed)
-    x =  compressed.match( /(\w*)\((\d+)x(\d+)\)/ )
     return compressed if md.failed_match?
     md.beginning + md.middle + self.decompress(md.end)
   end
