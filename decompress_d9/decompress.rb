@@ -1,18 +1,39 @@
+require 'ostruct'
 module Decompress
 
+
+  DSParser = Struct.new(:compressed_string)  do
+    def failed_match?
+      md.nil?
+    end
+    def md
+      @md ||= compressed_string.match( /(\w*)\((\d+)x(\d+)\)/ )
+    end
+    def beginning
+      md[1]
+    end
+    def letter_count
+      md[2].to_i
+    end
+    def multiplier
+      md[3].to_i
+    end
+    def compressed_section
+      md.post_match[0,letter_count]
+    end
+    def middle
+      compressed_section * multiplier
+    end
+    def end
+      md.post_match[letter_count..-1]
+    end
+  end
+
   def self.decompress(compressed)
-    full_match, pre, letter_count, multiplier =  
-      compressed.match( /(\w*)\((\d+)x(\d+)\)/ ).to_a
-    return compressed if full_match.nil?
-    letter_count = letter_count.to_i
-    multiplier = multiplier.to_i
-    expand_start = full_match.size
-    expand_end = full_match.size + letter_count
-    compressed_section = compressed[expand_start...expand_end]
-    uncompressed_section =  compressed_section * multiplier
-    remainder = compressed[expand_end..-1]
-    "remainder #{remainder}"
-    pre + uncompressed_section + self.decompress(remainder || "")
+    md = DSParser.new(compressed)
+    x =  compressed.match( /(\w*)\((\d+)x(\d+)\)/ )
+    return compressed if md.failed_match?
+    md.beginning + md.middle + self.decompress(md.end)
   end
   
 end
