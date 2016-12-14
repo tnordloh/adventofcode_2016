@@ -1,10 +1,10 @@
 
 class Assembly
-  def initialize(instructions)
+  def initialize(instructions,registers)
     @instructions = instructions
     @position = 0
 
-    @registers = { 
+    @registers = registers || {
       "a" => 0,
       "b" => 0,
       "c" => 0,
@@ -22,7 +22,6 @@ class Assembly
   end
 
   def inc(register)
-    p "register is [#{register}]"
     @registers[register] += 1
     @position + 1
   end
@@ -48,10 +47,10 @@ class Assembly
 
   def execute
     while @position < @instructions.size
-      p @position
-      p @registers
+#      p @position
+#      p @registers
       i = parse(@instructions[@position])
-      p i
+#      p i
       @position = self.send(*i)
     end
     @registers
@@ -60,7 +59,13 @@ class Assembly
 end
 
 if $0 == __FILE__
-  i = ARGF.readlines
-  a = Assembly.new(i)
+  instructions = ARGF.readlines 
+    registers = { 
+      "a" => 0,
+      "b" => 0,
+      "c" => 1,
+      "d" => 0
+    }
+  a = Assembly.new(instructions,registers)
   p a.execute
 end
