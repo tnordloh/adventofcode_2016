@@ -99,7 +99,8 @@ class Solver
   def initialize(seed,endpoint)
     @queue = [ Cubicle.new(seed,endpoint) ]
   end
-  attr_reader :cubicles, :moves
+
+  attr_reader :moves
   attr_accessor :queue
 
   def find_path(cell)
