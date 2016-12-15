@@ -23,8 +23,8 @@ class Cubicle
     cell_even?(move)
   end
 
-  def done?(y,x)
-    position == [y,x]
+  def done?(cell)
+    position == cell
   end
 
   def fill_cell(move)
@@ -102,10 +102,10 @@ class Solver
   attr_reader :cubicles, :moves
   attr_accessor :queue
 
-  def find_path(y,x)
+  def find_path(cell)
     loop do
       current = queue.shift
-      return current.moves.size if current.done?(y,x)
+      return current.moves.size if current.done?(cell)
       add_paths(current)
     end
   end
