@@ -11,6 +11,7 @@ times the designer's favorite number
 
 steps:
 first, create a grid that resembles this:
+
 ```
  0123456789
 0 .#.####.##
@@ -23,7 +24,7 @@ first, create a grid that resembles this:
 ```
 
 solver
-NEED: hash of previous locations
+NEED: hash of previous locations.
 NEED: breadth-first search
 position 1,1
 find valid moves
