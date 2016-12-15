@@ -26,7 +26,9 @@ first, create a grid that resembles this:
 solver
 * NEED: hash of previous locations.
 * NEED: breadth-first search
+
 1. position 1,1
 2. find valid moves
 3. create new position, with current list of moves for each valid move
+
 * repeat?
