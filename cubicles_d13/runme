@@ -4,7 +4,7 @@ require_relative 'cubicle'
 
 s = Solver.new(1350,[1,1])
 
-puts "distance to 39,31: #{s.find_path(39,31)}"
+puts "distance to 39,31: #{s.find_path([39,31])}"
 
 s = Solver.new(1350,[1,1])
 p "positions within 50 moves: #{s.moves_within(50)}"
