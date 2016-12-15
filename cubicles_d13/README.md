@@ -11,6 +11,7 @@ times the designer's favorite number
 
 steps:
 first, create a grid that resembles this:
+```
  0123456789
 0 .#.####.##
 1 ..#..#...#
@@ -19,3 +20,12 @@ first, create a grid that resembles this:
 4 .##..#..#.
 5 ..##....#.
 6 #...##.###
+```
+
+solver
+NEED: hash of previous locations
+NEED: breadth-first search
+position 1,1
+find valid moves
+create new position, with current list of moves for each valid move
+repeat?
