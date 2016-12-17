@@ -29,8 +29,10 @@ matching points would be
 
 solution:
 rotate until disk 1 has 0 in the second slot (address 1)
-and slot 2 has 0 in second slot
+and slot 2 has 0 in the third slot
+
 ....
+
 and slot n has 0 in the n+1 slot
 
 normalize the arrays by multiplying them to be at least as long as the shortest array.
