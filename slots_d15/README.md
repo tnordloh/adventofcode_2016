@@ -4,7 +4,7 @@ at the same rate, line up with each other.
 example:
 ```
 4 0 1 2 3
-1 0 1 0 1
+1 0 1 0 1 0
 
 0 1 2 3 4
 0 1 0 1 0
@@ -18,8 +18,10 @@ example:
 3 4 0 1 2
 1 0 1 0 1
 
+c  <====drop coin
 4 0 1 2 3
 0 1 0 1 0
+    ^ upcoming 0 on line 2
 ```
 
 matching points would be
