@@ -2,6 +2,7 @@ problem.  Find a point when 5 rotating numbers, changing
 at the same rate, line up with each other.
 
 example:
+```
 4 0 1 2 3
 1 0 1 0 1
 
@@ -19,6 +20,7 @@ example:
 
 4 0 1 2 3
 0 1 0 1 0
+```
 
 matching points would be
 
