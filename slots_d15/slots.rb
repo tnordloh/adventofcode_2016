@@ -17,10 +17,8 @@ class Slots
   def normalize
     return wheels if @normalized == true
     @normalized = true
-    p "normalizing"
-    biggest = max
     wheels.map! { |wheel| 
-      div,mod = biggest.divmod(wheel.size)
+      div,mod = max.divmod(wheel.size)
       multiplier = div + (mod == 0 ? 0 : 1)
       wheel * multiplier
     }
