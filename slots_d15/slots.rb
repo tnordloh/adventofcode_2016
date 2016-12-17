@@ -3,8 +3,7 @@ class Slots
     @wheels = []
     @normalized = false
   end  
-  attr_reader :wheels, :biggest_wheel
-  attr_writer :wheels
+  attr_accessor :wheels
 
   def max
     @biggest_wheel ||= @wheels.max_by { |wheel| wheel.size }
