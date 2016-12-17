@@ -5,20 +5,13 @@ offsets = sizes.zip(positions)
   val[0] - (wheel_placement+ 1) % val[0] - val[1]
 }
 
-p sizes
-p positions
-p offsets
 biggest        = sizes.max
 biggest_offset = offsets[sizes.rindex(biggest)]
 
-s_o = sizes.zip(offsets)
-(0..Float::INFINITY).find  do |i|
+result = (0..Float::INFINITY).find  do |i|
   index = biggest * i + biggest_offset
-  puts biggest
-  puts  index
-  s_o.all? { |x|
-    puts "checking #{index} against #{x.join(",")}"
+  sizes.zip(offsets).all? { |x|
     index % x[0]   == x[1]
   }
 end
-
+puts result * biggest + biggest_offset
