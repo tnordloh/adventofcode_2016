@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+#
+require_relative 'slots'
+
+w = Slots.new
+ARGF.each do |argv|
+  puts argv 
+  _,positions,position = 
+    argv.match(/(\d+) positions.+position (\d+)/).to_a
+  w.add(positions.to_i,position.to_i)
+end
+puts w.find_solution.to_s
+
