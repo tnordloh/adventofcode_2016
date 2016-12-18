@@ -5,9 +5,9 @@ module DragonChecksum
   end
   
   def checksum(data)
-    while data.size % 2 == 0
+    begin
       data = data.chars.each_slice(2).map { |x,y| x == y ? "1" : "0" }.join
-    end
+    end while data.size % 2 == 0
     data
   end
 end
