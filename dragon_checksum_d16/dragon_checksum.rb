@@ -1,7 +1,7 @@
 module EraseMyTracks
   module_function
 	def dragon_curve(seed,minimum_length)
-		while seed.size < minimum_length 
+		loop do
 			seed = "#{seed}0#{next_curve(seed)}"
 			return seed[0,minimum_length] if seed.size >= minimum_length
 		end
