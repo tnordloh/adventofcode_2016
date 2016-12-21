@@ -21,25 +21,21 @@ class Hopscotch
 
 
   def find_valid_moves
-    doors.select  {|node| open_door?(node) }
+    doors.select { |node| open_door?(node) }
   end
 
   def allowed?(move)
-    !exclusions
-      .join
-      .include?(move)
+    !exclusions.join.include?(move)
   end
 
-
-  def hash
-    Digest::MD5.hexdigest(seed + moves.join)
+  def direction_open?(direction)
+    mapped_direction = { "U" => 0, "D" => 1, "L" => 2, "R" => 3 }[direction]
+    lock_position    = Digest::MD5.hexdigest(seed + moves.join)[mapped_direction]
+    "bcdef".include?( lock_position )
   end
-
-
 
   def open_door?(move)
-    "bcdef".include?( hash[ DIRECTION_MAP[ move.direction ]  ] ) && 
-      allowed?(move.direction)
+    direction_open?( move.direction ) && allowed?(move.direction)
   end
 
   def solved?
@@ -51,21 +47,15 @@ class Hopscotch
   end
 
   def right
+    return nil if position % 4 == 0
     right_position = (position + 1) 
-    if within_bounds?(right_position) && right_position % 4 != 1
-      Movement.new("R",right_position)
-    else
-      nil
-    end
+    within_bounds?(right_position) ? Movement.new("R",right_position) : nil
   end
 
   def left
+    return nil if position % 4 == 1
     left_position = (position - 1) 
-    if within_bounds?(left_position) && left_position % 4 != 0
-      Movement.new("L",left_position)
-    else
-      nil
-    end
+    within_bounds?(left_position) ? Movement.new("L",left_position) : nil
   end
 
   def up
@@ -81,24 +71,20 @@ class Hopscotch
   def doors
     [left,right,up,down].compact
   end
-
-
 end
+
 class Solver
   def initialize(seed)
     @seed     = seed
     @endpoint = endpoint
-    @longest = Hopscotch.new(seed)
-    @queue   = Array.new.push @longest
+    @longest  = Hopscotch.new(seed)
+    @queue    = Array.new.push @longest
   end
 
   attr_reader :longest, :seed, :endpoint, :queue
 
   def update_longest(entry)
-    if entry.moves.size > longest.moves.size
-      @longest= entry 
-    end
-
+    @longest = entry if entry.moves.size > longest.moves.size
   end
 
   def find_path
@@ -117,24 +103,16 @@ class Solver
     move = current.find_valid_moves.sample
     return if move == nil
     exclusion_list = [move.direction] + current.exclusions
-    queue.unshift Hopscotch.new(current.seed, move.position ,*current.moves , move.direction)
     queue.unshift Hopscotch.new(current.seed, 
-                                current.position ,*current.moves,
+                                move.position,
+                                *current.moves, move.direction)
+    queue.unshift Hopscotch.new(current.seed, 
+                                current.position, *current.moves,
                                 exclusions: exclusion_list )
   end
-
 end
 
-
-
 if $0 == __FILE__
-  hop = Hopscotch.new('hijkl',1)
-  p hop.find_valid_moves
-  #  s = Solver.new("ihgpwlah",1)
-  #  path = s.find_path
-  #  puts path
-  puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-  s = Solver.new("ioramepc")
-  size = s.find_path
+  size = Solver.new("ioramepc").find_path
   puts "longest path: #{size}"
 end
