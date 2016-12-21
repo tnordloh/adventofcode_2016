@@ -21,14 +21,11 @@ module TrappedFloor
     calculate_tile(row[-2,2] + "." )
   end
 
-  def regex
-    Regexp.new ["..^",".^^","^..","^^."]
-      .map { |element| Regexp.escape(element) }
-      .join("|")
-  end
-
   def calculate_tile(tiles)
-    if tiles =~ regex
+    if tiles =~ /\.\.\^|
+                 \.\^\^|
+                 \^\.\.|
+                 \^\^\./x
       '^'
     else
       '.'
