@@ -20,7 +20,7 @@ trap in these cases
 
 custom rule for first and last elements.
 
-scan the rest, matching /(.(?:(..))/
+scan the rest, matching /(.(?=(..))/
 
 grabs one char, in var 1, and two more, (in var 2), but non-capturing "(?=)" 
 
