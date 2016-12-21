@@ -26,7 +26,7 @@ DIRECTION_MAP = { "U" => 0,
 require 'digest'
 
 class Hopscotch
-  def initialize(seed,position,*moves)
+  def initialize(seed,position = 1,*moves)
 
     @seed     = seed  
     @moves    = moves || []
@@ -35,13 +35,8 @@ class Hopscotch
   end  
   attr_reader :seed, :moves, :position
 
-  def valid_position?(move)
-    door?(move) && open?(move)
-  end
-
   def hash
-    p seed + moves.join
-    p Digest::MD5.hexdigest(seed + moves.join)
+    Digest::MD5.hexdigest(seed + moves.join)
   end
 
   def door?(move)
@@ -58,26 +53,21 @@ class Hopscotch
   end
 
   def find_valid_moves
-    NODE_MAP[position].each.select  {|node,value|
-      p "#{node}  xxxx  #{value}" if open?(value)
-      p open?(value)
-    }
+    NODE_MAP[position].each.select  {|node,value| open?(value) }
   end
 
 end
 class Solver
-  def initialize(seed,endpoint)
-    @queue = [ Hopscotch.new(seed,endpoint) ]
+  def initialize(seed)
+    @queue = [ Hopscotch.new(seed) ]
   end
 
   attr_reader :moves
   attr_accessor :queue
 
-  def find_path
+  def solve
     loop do
       current = queue.shift
-      p current
-      puts "queue size #{queue.size}"
       return current.moves.join if current.done?
       add_paths(current)
     end
@@ -85,9 +75,7 @@ class Solver
 
   def add_paths(current)
     current.find_valid_moves.each do |move|
-      puts "new with #{move}"
       queue << Hopscotch.new(current.seed, move[1],*current.moves , move[0])
-      yield move if block_given?
     end
   end
 
@@ -96,18 +84,6 @@ end
 
 
 if $0 == __FILE__
-  hop = Hopscotch.new('hijkl',1)
-  p hop.door?(2)
-  p hop.door?(3)
-  p "open?"
-  p hop.open?(2)
-  p hop.open?(5)
-  p hop.find_valid_moves
-#  s = Solver.new("ihgpwlah",1)
-#  path = s.find_path
-#  puts path
-  puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-  s = Solver.new("ioramepc",1)
-  path = s.find_path
-  puts path
+  s = Solver.new("ioramepc")
+  puts s.solve
 end
