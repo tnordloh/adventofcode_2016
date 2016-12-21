@@ -3,11 +3,6 @@ require 'digest'
 Movement = Struct.new(:direction,:position)
 
 class Hopscotch
-  DIRECTION_MAP = { "U" => 0,
-                    "D" => 1,
-                    "L" => 2,
-                    "R" => 3,
-  }
   def initialize(seed,position = 1,*moves, exclusions: [])
 
     @seed       = seed  
@@ -19,10 +14,15 @@ class Hopscotch
   end  
   attr_reader :seed, :moves, :position, :exclusions
 
-
   def find_valid_moves
     doors.select { |node| open_door?(node) }
   end
+
+  def solved?
+    position == 16
+  end
+
+  private
 
   def allowed?(move)
     !exclusions.join.include?(move)
@@ -36,10 +36,6 @@ class Hopscotch
 
   def open_door?(move)
     direction_open?( move.direction ) && allowed?(move.direction)
-  end
-
-  def solved?
-    position == 16
   end
 
   def within_bounds?(move_spot)
