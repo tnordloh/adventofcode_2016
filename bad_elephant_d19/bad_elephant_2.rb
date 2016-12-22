@@ -16,7 +16,7 @@ module BadElephant
 
   def find_with_math(count)
     marker = fill_marker
-    1.upto(count).inject(0) do |val,final_value|
+    1.upto(count).inject(0) do |final_value,_|
       marker = marker + fill_marker(marker.last) if marker.size == 1
       marker.shift
     end
