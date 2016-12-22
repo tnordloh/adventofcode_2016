@@ -7,17 +7,10 @@ module BadElephant
   end
 
   def find_with_math(count)
-    final_value = 1
     odds = 1
-    1.upto(count) do |i|
-      if i >= odds
-        final_value = odds
-      else
-        odds = 1
-      end
-      odds += 2
+    1.upto(count).inject(1) do |final_value,val|
+      val < final_value + 2 ? 1 : final_value + 2
     end
-    final_value
   end
 
   def find(count)
