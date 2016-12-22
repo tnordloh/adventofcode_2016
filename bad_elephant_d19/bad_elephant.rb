@@ -23,8 +23,7 @@ module BadElephant
   def find(count)
     elf_circle = elves(count)
     while elf_circle.size > 1
-      elf_circle.first.presents += elf_circle[1].presents
-      elf_circle.delete_at(1)
+      elf_circle.first.presents += elf_circle.delete_at(1).presents
       elf_circle.rotate!
     end
     elf_circle.first.position
