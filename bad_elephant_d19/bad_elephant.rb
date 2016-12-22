@@ -7,7 +7,6 @@ module BadElephant
   end
 
   def find_with_math(count)
-    odds = 1
     1.upto(count).inject(1) do |final_value,val|
       val < final_value + 2 ? 1 : final_value + 2
     end
