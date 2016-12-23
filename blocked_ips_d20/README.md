@@ -24,3 +24,9 @@ Read up on Range functionality, see if Ruby can combine ranges easily.
 If not, code own solution for consolidating overlapping ranges, to get a final 
 range.
 
+
+## what I want to fix; ##
+
+I used 'inject' in a non-standard way.  Look at 'enumerator' for something better
+Found each_cons. Never used that, let's try it out!
+

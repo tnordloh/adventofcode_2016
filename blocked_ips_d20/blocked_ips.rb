@@ -5,10 +5,10 @@ module BlockedIps
     ranges.sort { |one,two| one.min <=> two.min }
   end
 
-  def fix_overlaps(ranges)
-    count = 0
-    while count != ranges.size
-      count = ranges.size
+  def consolidate_overlaps(ranges)
+    range_changed = 0
+    while range_changed != ranges.size
+      range_changed = ranges.size
       ranges = sort(ranges)
       .chunk_while { |first,second| first.max + 1 >= second.min }
       .map  { |overlapping_ranges| 
@@ -20,17 +20,13 @@ module BlockedIps
   end
 
   def smallest_allowed(ranges)
-    fix_overlaps(ranges).first.max+1
+    consolidate_overlaps(ranges).first.max+1
   end
 
   def count_all_allowed(ranges)
-    counter = 0
-    fix_overlaps(ranges).inject() {|n,n1|
-      counter += (n.max + 1...n1.min).size
-      puts "n #{n}, n1 #{n1}, counter #{counter}"
-      n1
-    }
-    counter
+    consolidate_overlaps(ranges)
+      .each_cons(2)
+      .inject(0) { |counter,(n1,n2)| (n1.max + 1...n2.min).size + counter }
   end
 
 end
