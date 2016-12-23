@@ -7,4 +7,4 @@ ranges = ARGF.readlines.map { |line|
   _,min,max = /(\d+)\-(\d+)/.match(line).to_a.map(&:to_i)
   (min..max)
 }
-puts BlockedIps.solve(*ranges)
+puts BlockedIps.count_all_allowed(ranges)
