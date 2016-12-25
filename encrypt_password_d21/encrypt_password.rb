@@ -9,18 +9,12 @@ class EncryptPasswored
   attr_reader :string
 
   def swap_index(index_1,index_2)
-    index_1,index_2 = [index_1,index_2].sort
-    temp = string[0...index_1] + 
-      string[index_2] + 
-      string[index_1 + 1...index_2 ] + string[index_1] +
-      string[index_2+1..-1]
-    self.class.new(temp)
+    swap_letter(string[index_1],string[index_2])
   end
 
   def swap_letter(letter_1,letter_2)
-    position_1 = string.index(letter_1)
-    position_2 = string.index(letter_2)
-    swap_index(position_1,position_2)
+    tr_value = string[letter_1] + string[letter_2]
+    self.class.new(string.tr(tr_value,tr_value.reverse))
   end
 
   def reverse(index_1, index_2)
@@ -43,16 +37,8 @@ class EncryptPasswored
   end
 
   def rotate_on_position(letter)
-    position = string.index(letter) + 1
-    position += ( string.index(letter) >= 4 ? 1 : 0 )
+    position = string.index(letter) + 1 + ( string.index(letter) >= 4 ? 1 : 0 )
     rotate("right", position)
   end
 
-  def swap(position_1,position_2)
-    if /\d/ =~ position_1 &&  /\d/ =~ position_2
-      swap_index(position_1.to_i,position_2.to_i)
-    else
-      swap_letter( position_1, position_2 )
-    end
-  end
 end

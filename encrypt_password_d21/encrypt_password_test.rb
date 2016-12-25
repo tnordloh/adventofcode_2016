@@ -5,10 +5,10 @@ describe EncryptPasswored do
   it "encrypts a password" do
     crypt = EncryptPasswored.new("abcde")
 
-    crypt_swap_index = crypt.swap(4.to_s,0.to_s)
+    crypt_swap_index = crypt.swap_index(4,0)
     crypt_swap_index.to_s.must_equal("ebcda")
 
-    crypt_swap_letter = crypt_swap_index.swap("d","b")
+    crypt_swap_letter = crypt_swap_index.swap_letter("d","b")
     crypt_swap_letter.to_s.must_equal("edcba")
 
     reverse = crypt_swap_letter.reverse(0,4)

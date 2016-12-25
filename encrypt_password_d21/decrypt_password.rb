@@ -10,11 +10,7 @@ class DecryptPasswored
 
   def swap_index(index_1,index_2)
     index_1,index_2 = [index_1,index_2].sort
-    temp = string[0...index_1] + 
-      string[index_2] + 
-      string[index_1 + 1...index_2 ] + string[index_1] +
-      string[index_2+1..-1]
-    self.class.new(temp)
+    move(index_1,index_2).move(index_2,index_1)
   end
 
   def swap_letter(letter_1,letter_2)
@@ -24,10 +20,10 @@ class DecryptPasswored
   end
 
   def reverse(index_1, index_2)
-    temp = string[0...index_1] + 
-      string[index_1..index_2].reverse + 
-      string[index_2+1..-1]
-    self.class.new(temp)
+    beginning = string[0...index_1]
+    middle    = string[index_1..index_2].reverse
+    ending    = string[index_2+1..-1]
+    self.class.new("#{beginning}#{middle}#{ending}")
   end
 
   def move(index_1,index_2)
@@ -48,11 +44,4 @@ class DecryptPasswored
     rotate("left", position)
   end
 
-  def swap(position_1,position_2)
-    if /\d/ =~ position_1 &&  /\d/ =~ position_2
-      swap_index(position_1.to_i,position_2.to_i)
-    else
-      swap_letter( position_1, position_2 )
-    end
-  end
 end
