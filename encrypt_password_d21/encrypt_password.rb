@@ -18,10 +18,8 @@ class EncryptPasswored
   end
 
   def reverse(index_1, index_2)
-    temp = string[0...index_1] + 
-      string[index_1..index_2].reverse + 
-      string[index_2+1..-1]
-    self.class.new(temp)
+    reverse_section = string[index_1..index_2]
+    self.class.new(string.tr(reverse_section,reverse_section.reverse))
   end
 
   def move(index_1,index_2)
