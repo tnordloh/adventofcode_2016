@@ -16,12 +16,6 @@ MountPoint = Struct.new(:filesystem,:size,:used,:available,:percent) {
     end
   end
 
-  def pair?(other)
-    return false if filesystem == other.filesystem
-    return false if used == 0
-    used <= other.available
-  end
-
   def y
     filesystem.match( /y(\d+)/).to_a[1].to_i
   end
@@ -49,13 +43,6 @@ class Map
       map[values[0]][values[1]]
     }
      
-  end
-
-  def can_move?(cell)
-    neighbors(cell).any? { |neighbor|
-      cell.used < neighbor.available
-    }
-    
   end
 
   def to_s
