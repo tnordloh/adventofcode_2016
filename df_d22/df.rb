@@ -33,9 +33,7 @@ MountPoint = Struct.new(:filesystem,:size,:used,:available,:percent) {
 
 class Map
   def initialize(map)
-
     @map = map
-
   end  
   attr_reader :map
 
