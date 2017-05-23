@@ -2,9 +2,11 @@ module TrappedFloor
   module_function
   
   def next(row)
-    calculate_first_tile(    row) +
-      calculate_middle_tiles(row) +
-      calculate_last_tile(   row)
+      calculate_middle_tiles(add_wall + row + add_wall)
+  end
+
+  def add_wall
+    "."
   end
 
   def calculate_middle_tiles(row)

@@ -11,7 +11,8 @@ instructions are:
     dec x decreases the value of register x by one.
     jnz x y jumps to an instruction y away (positive means forward; negative means backward), but only if x is not zero.
 
-Strategy:
+## Strategy ##
+
 Build a test with given data
 
 Build a parser for instructions.

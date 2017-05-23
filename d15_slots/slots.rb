@@ -14,22 +14,11 @@ class Slots
     wheels << (0...size).map {|i| i }.rotate(position)
   end
 
-  def normalize
-    return wheels if @normalized == true
-    @normalized = true
-    wheels.map! { |wheel| 
-      div,mod = max.divmod(wheel.size)
-      multiplier = div + (mod == 0 ? 0 : 1)
-      wheel * multiplier
-    }
-  end
-
   def rotate(num)
     wheels.map { |wheel| wheel.rotate(num) }
   end
 
   def combination?(num)
-    normalize
       rotate(num)
       .each_with_index
       .map { |wheel,i| wheel[(i % wheel.size) + 1] == 0 }
