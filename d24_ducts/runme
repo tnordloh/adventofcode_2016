@@ -1,0 +1,56 @@
+#!/usr/bin/env ruby
+
+require_relative 'cubicle'
+layout = ARGF.readlines.map {|line| line.chomp.scan(/./) }
+
+waypoints = layout.each_with_index.map { |line,y| 
+  matcher = line.join.scan(/\d/)
+  matcher.map do |number|
+    puts "hi"
+    x = line.index(number)
+    puts "y:#{y} x:#{x},#{number}" 
+    [number.to_i,y.to_i,x.to_i]
+  end
+}.flatten(1).compact.sort
+p waypoints
+starting_point = waypoints.shift
+puts "starting point"
+p starting_point
+distance_graph = {}
+min_distance = waypoints.permutation.min_by do |perm|
+  perm.unshift(starting_point)
+  p perm
+  min = perm.each_cons(2).inject(0) do |memo,(waypoint_1,waypoint_2)|
+    p distance_graph
+    if distance_graph[[waypoint_1,waypoint_2]]
+      memo + distance_graph[[waypoint_1,waypoint_2]]
+    else
+      s = Solver.new(layout,waypoint_1[1,2])
+      distance_graph[[waypoint_1,waypoint_2]] = s.find_path(waypoint_2[1,2])
+      distance_graph[[waypoint_2,waypoint_1]] = distance_graph[[waypoint_1,waypoint_2]]
+      memo + distance_graph[[waypoint_1,waypoint_2]]
+    end
+  end
+  #puts "distance to #{waypoints[0][1,2].join(",")}: #{s.find_path(waypoints[0][1,2])}"
+end
+min_distance.unshift starting_point
+x = min_distance.each_cons(2).inject(0) do |memo,(waypoint_1,waypoint_2)|
+  puts "waypoint one"
+  p waypoint_1
+  puts "waypoint two"
+  p waypoint_2
+  puts "memo is #{memo}"
+  if distance_graph[[waypoint_1,waypoint_2]] 
+    return distance_graph[[waypoint_1,waypoint_2]] 
+  else
+    s = Solver.new(layout,waypoint_1[1,2])
+    distance_graph[[waypoint_1,waypoint_2]] = s.find_path(waypoint_2[1,2])
+    distance_graph[[waypoint_2,waypoint_1]] = distance_graph[[waypoint_1,waypoint_2]]
+  end
+  p distance = s.find_path(waypoint_2[1,2])
+  p "distance: #{distance.class}"
+  memo + distance_graph[waypoint_1,waypoint_2]
+end
+puts "min_distance is #{min_distance}"
+puts "x is #{x}"
+
